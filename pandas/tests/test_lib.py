@@ -203,3 +203,15 @@ class TestIndexing:
 def test_cache_readonly_preserve_docstrings():
     # GH18197
     assert Index.hasnans.__doc__ is not None
+
+
+def test_fast_unique_multiple_list_with_sort():
+    keys = [['p', 'a'], ['n', 'd'], ['a', 's']]
+
+    expected = np.array(['a', 'd', 'n', 'p', 's'])
+    result = lib.fast_unique_multiple_list(keys, sort=True)
+    tm.assert_numpy_array_equal(np.array(result), expected)
+
+    expected = np.array(['p', 'a', 'n', 'd', 's'])
+    result = lib.fast_unique_multiple_list(keys, sort=False)
+    tm.assert_numpy_array_equal(np.array(result), expected)
